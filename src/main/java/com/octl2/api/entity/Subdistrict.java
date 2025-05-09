@@ -9,13 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lc_province")
+@Table(name = "lc_subdistrict")
 @Getter
 @Setter
-public class Province {
+public class Subdistrict {
     @Id
-    @Column(name = "province_id")
-    private Long id;
+    @Column(name = "subdistrict_id")
+    private Long subdistrictId;
+
+    @Column(name = "district_id")
+    private Long districtId;
 
     @Column(name = "name")
     private String name;
@@ -27,5 +30,5 @@ public class Province {
     private String code;
 
     @Column(name = "dcsr")
-    private String description;
+    private String dcsr;
 }

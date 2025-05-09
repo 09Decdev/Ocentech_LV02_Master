@@ -1,6 +1,8 @@
 package com.octl2.api.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -9,13 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lc_province")
 @Getter
 @Setter
-public class Province {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "lc_district")
+public class District {
     @Id
+    @Column(name = "district_id")
+    private Long districtId;
+
     @Column(name = "province_id")
-    private Long id;
+    private Long provinceId;
 
     @Column(name = "name")
     private String name;
@@ -27,5 +34,5 @@ public class Province {
     private String code;
 
     @Column(name = "dcsr")
-    private String description;
+    private String dcsr;
 }
