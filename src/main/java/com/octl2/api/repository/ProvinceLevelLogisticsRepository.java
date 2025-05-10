@@ -1,6 +1,7 @@
 package com.octl2.api.repository;
 
 import com.octl2.api.dto.LogisticsByLocationDto;
+import com.octl2.api.dto.LogisticExport;
 import com.octl2.api.entity.CfDefaultDelivery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -46,4 +47,38 @@ public interface ProvinceLevelLogisticsRepository extends JpaRepository<CfDefaul
             "AND cf.lastmileId = lm.partnerId AND lm.partnerType = 121 " +
             "AND cf.warehouseId = wh.warehouseId")
     List<LogisticsByLocationDto> findSubdistrictsByProvince(@Param("provinceId") Long provinceId);
+
+    /*
+    Trường thông tin	Ghi chú
+provinceId	ID của tỉnh
+provinceName	Tên tỉnh
+districtId, districtName	NULL
+subdistrictId, subdistrictName	NULL
+levelType	Gán chuỗi "Level 1"
+ffmId, ffmName	Partner có partnerType = 122
+lmId, lmName	Partner có partnerType = 121
+whId, whName	Từ bảng bp_warehouse
+    */
+
+    @Query("SELECT" +
+            " p.id AS provinceId, " +
+            " p.name as provinceName," +
+//            " null AS districtId, " +
+//            " null as districtName," +
+//            " NULL as subdistrictId," +
+//            " NULL AS subdistrictName ," +
+            " 'Level 1' as levelType, " +
+            " ffm.partnerId as ffmId, " +
+            " ffm.name as ffmName, " +
+            " lm.partnerId as lmId, " +
+            " lm.name as lmName, " +
+            " wh.warehouseId as whId, " +
+            " wh.warehouseName as whName" +
+            " from CfDefaultDelivery cf " +
+            " JOIN Province p ON cf.locationId = p.id " +
+            " LEFT JOIN Partner ffm ON cf.ffmId = ffm.partnerId AND ffm.partnerType = 122 " +
+            " LEFT JOIN Partner lm ON cf.lastmileId = lm.partnerId AND lm.partnerType = 121 " +
+            " LEFT JOIN Warehourse wh ON cf.warehouseId = wh.warehouseId"
+    )
+    List<LogisticExport> exportLevel1();
 }

@@ -4,6 +4,8 @@ import com.octl2.api.dto.response.LogisticsResponse;
 import com.octl2.api.service.LogisticService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,5 +40,18 @@ public class LogisticController {
     public ResponseEntity<List<LogisticsResponse>> getLogisticsBySubdistrict(@RequestParam Long districtId) {
         List<LogisticsResponse> response = logisticService.getLogisticsBySubdistrict(districtId);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/export/excel")
+    public ResponseEntity<byte[]> exportLogisticsToExcel() {
+        try {
+            byte[] excelFile = logisticService.exportLogisticsToExcel();
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=logistics_export.xlsx")
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .body(excelFile);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
