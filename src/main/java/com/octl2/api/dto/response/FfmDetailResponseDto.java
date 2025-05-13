@@ -6,12 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogisticsByDistrictDto {
-    private Long id;
-    private String name;
-    private List<LogisticDto>logistics;
-}
+public class FfmDetailResponseDto {
+    private Long ffmId;
+    private String ffmName;
+    private String ffmShortname;
+    private List<LmResponse> linkedLms;
+    private List<WarehouseResponse> warehouses;
+} 

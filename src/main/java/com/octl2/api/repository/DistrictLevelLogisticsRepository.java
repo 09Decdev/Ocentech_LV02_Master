@@ -3,6 +3,7 @@ package com.octl2.api.repository;
 import com.octl2.api.dto.LogisticsByLocationDto;
 import com.octl2.api.dto.LogisticExport;
 import com.octl2.api.entity.CfDefaultDelivery;
+import com.octl2.api.entity.District;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -74,6 +75,8 @@ public interface DistrictLevelLogisticsRepository extends JpaRepository<CfDefaul
             " LEFT JOIN Warehourse wh ON cf.warehouseId = wh.warehouseId"
     )
     List<LogisticExport> exportLevel2();
+
+    List<District> findByProvinceId(Long provinceId);
 
 }
 

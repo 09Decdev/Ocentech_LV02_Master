@@ -1,17 +1,16 @@
 package com.octl2.api.controller;
 
+import com.octl2.api.dto.request.UpdateDefaultDeliveryRequest;
 import com.octl2.api.dto.response.LogisticsResponse;
 import com.octl2.api.service.LogisticService;
+import com.octl2.api.service.impl.LocationLevelServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class LogisticController {
     private final LogisticService logisticService;
+    private final LocationLevelServiceImpl locationLevelService;
 
     @GetMapping("/provinces")
     public ResponseEntity<List<LogisticsResponse>> getLogisticsByProvince() {
@@ -54,4 +54,21 @@ public class LogisticController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<Object> updateDefaultDelivery(@RequestBody UpdateDefaultDeliveryRequest request){
+        try {
+            locationLevelService.updateDefaultDelivery(
+                    request.getLocationId(),
+                    request.getFfmId(),
+                    request.getLmId(),
+                    request.getWhId()
+            );
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ex){
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+    
+    
 }
