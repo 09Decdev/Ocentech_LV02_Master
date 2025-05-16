@@ -82,4 +82,10 @@ public class OctExceptionHandler {
     private ResponseEntity<OctResponse<String>> buildResponseEntity(OctException ex) {
         return new ResponseEntity<>(OctResponse.buildApplicationException(ex), HttpStatus.OK);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<String> handleInvalidInputRequest(IllegalArgumentException ex) {
+        log.info("handleInvalidInputRequest. Msg = {}", ex.getMessage());
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

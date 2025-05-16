@@ -76,7 +76,6 @@ public interface DistrictLevelLogisticsRepository extends JpaRepository<CfDefaul
     )
     List<LogisticExport> exportLevel2();
 
-    List<District> findByProvinceId(Long provinceId);
 
 }
 

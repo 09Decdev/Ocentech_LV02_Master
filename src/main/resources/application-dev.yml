@@ -11,11 +11,12 @@ spring:
   jpa:
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: false
+    show-sql: true
     generate-ddl: false
     open-in-view: false
     hibernate:
       ddl-auto: none
+
   sql:
     init:
       mode: always
@@ -23,6 +24,8 @@ spring:
 logging:
   level:
     root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   file:
     name: "logs/info.log"
   pattern:

@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "cf_default_delivery")
 public class CfDefaultDelivery {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cf_default_do_id")
     private Long cfDefaultDoId;
 

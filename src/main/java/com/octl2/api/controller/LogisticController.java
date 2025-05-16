@@ -55,7 +55,7 @@ public class LogisticController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Object> updateDefaultDelivery(@RequestBody UpdateDefaultDeliveryRequest request){
         try {
             locationLevelService.updateDefaultDelivery(
